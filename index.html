@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>报表统计网页版</title>
+  <link rel="stylesheet" href="assets/styles.css?v=20260319-4" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Local Report Workspace</p>
+        <h1>报表统计网页版</h1>
+        <p class="hero-text">
+          用浏览器直接上传 Excel，选择自然周或自定义日期区间，生成新增报表统计和填报率文案。
+        </p>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-card">
+          <span class="meta-label">统计口径</span>
+          <strong>新增按下发时间，填报按截止时间</strong>
+        </div>
+        <div class="meta-card">
+          <span class="meta-label">运行方式</span>
+          <strong>本地浏览器 + 本地 Python 服务</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel form-panel">
+        <div class="panel-head">
+          <h2>输入区</h2>
+          <p>文件上传、周期选择、结果生成都在这里。</p>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label">Excel 文件</label>
+          <button id="pick-file" class="btn secondary" type="button">选择 Excel 文件</button>
+          <input id="file-input" type="file" accept=".xlsx" hidden />
+          <div id="drop-zone" class="drop-zone">
+            <strong>拖拽 Excel 到这里</strong>
+            <span>或点击上方按钮选择 `.xlsx` 文件</span>
+          </div>
+          <div id="file-name" class="file-name">当前未选择文件</div>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label">统计模式</label>
+          <div class="mode-grid">
+            <label class="mode-option active">
+              <input type="radio" name="mode" value="week" checked />
+              <span>按某一天所在自然周统计</span>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="mode" value="custom" />
+              <span>按自定义开始和结束日期统计</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <label class="field-block">
+            <span class="field-label">自然周日期</span>
+            <input id="anchor-date" type="date" />
+            <small>当选择自然周模式时，系统自动换算周一到周日。</small>
+          </label>
+          <label class="field-block">
+            <span class="field-label">开始日期</span>
+            <input id="start-date" type="date" />
+            <small>自定义区间时使用。</small>
+          </label>
+          <label class="field-block">
+            <span class="field-label">结束日期</span>
+            <input id="end-date" type="date" />
+            <small>自定义区间时使用。</small>
+          </label>
+        </div>
+
+        <div class="quick-actions">
+          <button id="fill-this-week" class="btn ghost" type="button">本周</button>
+          <button id="fill-last-week" class="btn ghost" type="button">上周</button>
+        </div>
+
+        <div class="primary-actions">
+          <button id="generate-btn" class="btn primary" type="button">生成统计结果</button>
+          <button id="reset-btn" class="btn ghost" type="button">清空结果</button>
+        </div>
+
+        <p id="status" class="status-text">请选择 Excel 文件，然后点击“生成统计结果”。</p>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="panel-head">
+          <h2>输出区</h2>
+          <p>这里会显示摘要数字和最终文案。</p>
+        </div>
+
+        <div id="summary-grid" class="summary-grid hidden"></div>
+
+        <div id="result-meta" class="result-meta hidden"></div>
+
+        <div class="result-card">
+          <div class="result-card-head">
+            <h3>统计文案</h3>
+            <div class="result-actions">
+              <button id="download-circulation-btn" class="btn secondary" type="button">导出流转明细</button>
+              <button id="copy-btn" class="btn secondary" type="button">复制结果</button>
+              <button id="download-btn" class="btn secondary" type="button">下载文本</button>
+            </div>
+          </div>
+          <pre id="result-output" class="result-output">统计结果会显示在这里。</pre>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js?v=20260319-4"></script>
+</body>
+</html>
